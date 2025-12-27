@@ -1,0 +1,18 @@
+package com.esoft.tpdevops2.services;
+
+import com.esoft.tpdevops2.entities.User;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface UserService {
+    User saveUser(User user);
+
+    List<User> getAllUsers();
+
+    Optional<User> getUserById(int id);
+
+    User updateUser(int id, User user);
+
+    void deleteUser(int id);
+}
