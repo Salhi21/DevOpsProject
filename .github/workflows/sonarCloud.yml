@@ -2,13 +2,17 @@ name: SonarCloud CI
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches:
+      - main
+      - develop
   pull_request:
-    branches: [ "main", "develop" ]
+    branches:
+      - main
+      - develop
 
 jobs:
   build:
-    name: Build and analyze on SonarCloud
+    name: Build and Analyze on SonarCloud
     runs-on: ubuntu-latest
 
     steps:
@@ -17,28 +21,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK 17 and Maven
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
           cache: maven
 
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
       - name: Build with Maven
         run: mvn clean verify -B
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectKey: ameeeni_TpDevops2
-          organization: ameeeni
-          projectBaseDir: .
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=ameeeni_TpDevops2
+            -Dsonar.organization=ameeeni
+            -Dsonar.host.url=https://sonarcloud.io
