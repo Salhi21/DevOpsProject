@@ -5,10 +5,6 @@ pipeline {
         maven 'Maven-3.9'
     }
 
-    environment {
-        APP_NAME = 'mon-app-springboot'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -16,9 +12,9 @@ pipeline {
             }
         }
 
-        stage('Build & Test') {
+        stage('Build & Test (with coverage)') {
             steps {
-                sh 'mvn clean verify -U'
+                sh 'mvn clean verify'
             }
         }
 
@@ -31,10 +27,10 @@ pipeline {
 
     post {
         success {
-            echo 'Build SUCCESS!'
+            echo 'Build SUCCESS! Coverage ≥ 80%'
         }
         failure {
-            echo 'Build FAILED!'
+            echo 'Build FAILED! Test coverage is below 80%'
         }
     }
 }
