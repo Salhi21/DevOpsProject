@@ -26,11 +26,11 @@
 		<java.version>17</java.version>
 
 		<!-- SonarCloud -->
-		<sonar.projectKey>ameeeni_TpDevops2</sonar.projectKey>
-		<sonar.organization>ameeeni</sonar.organization>
+		<sonar.projectKey>f0b1b14bad08c11609f78088f4c945f6428c1b14</sonar.projectKey>
+		<sonar.organization>salhi21</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.coverage.jacoco.xmlReportPaths>
-			target/site/jacoco/jacoco.xml
+			${project.build.directory}/site/jacoco/jacoco.xml
 		</sonar.coverage.jacoco.xmlReportPaths>
 
 		<!-- Versions -->
@@ -38,6 +38,64 @@
 		<lombok.version>1.18.30</lombok.version>
 	</properties>
 
+	<repositories>
+		<!-- Your internal repositories -->
+		<repository>
+			<id>central</id>
+			<name>libs-release</name>
+			<url>https://binaries.factory.be-ys.net/repository/libs-release</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>snapshots</id>
+			<name>libs-snapshot</name>
+			<url>https://binaries.factory.be-ys.net/repository/libs-snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- Maven Central (for Sonar plugin and other public dependencies) -->
+		<repository>
+			<id>central-maven</id>
+			<name>Maven Central</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<name>libs-release</name>
+			<url>https://binaries.factory.be-ys.net/repository/libs-release</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>snapshots</id>
+			<name>libs-snapshot</name>
+			<url>https://binaries.factory.be-ys.net/repository/libs-snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+
+		<!-- Maven Central for plugins -->
+		<pluginRepository>
+			<id>central-maven</id>
+			<name>Maven Central</name>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	<!-- ===================== -->
 	<!-- DEPENDENCIES -->
 	<!-- ===================== -->
@@ -169,6 +227,7 @@
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.10.0.2594</version>
 			</plugin>
+
 
 		</plugins>
 	</build>
