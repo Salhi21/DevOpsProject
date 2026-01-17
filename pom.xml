@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.2.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
+
 	<groupId>com.esoft</groupId>
 	<artifactId>tpDevops2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tpDevops2</name>
-	<description>tpDevops2</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<description>DevOps TP – Spring Boot</description>
+
+	<!-- ===================== -->
+	<!-- PROPERTIES -->
+	<!-- ===================== -->
 	<properties>
 		<java.version>17</java.version>
-		<junit.jupiter.version>5.10.2</junit.jupiter.version>
-		<cucumber.version>7.33.0</cucumber.version>
+
+		<!-- SonarCloud -->
 		<sonar.projectKey>ameeeni_TpDevops2</sonar.projectKey>
 		<sonar.organization>ameeeni</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.coverage.jacoco.xmlReportPaths>
-			../app-it/target/site/jacoco/jacoco.xml
+			target/site/jacoco/jacoco.xml
 		</sonar.coverage.jacoco.xmlReportPaths>
+
+		<!-- Versions -->
+		<cucumber.version>7.14.0</cucumber.version>
+		<lombok.version>1.18.30</lombok.version>
 	</properties>
+
+	<!-- ===================== -->
+	<!-- DEPENDENCIES -->
+	<!-- ===================== -->
 	<dependencies>
-		<!-- Web / MVC -->
+
+		<!-- Web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -50,7 +55,7 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<!-- H2 Database -->
+		<!-- H2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -69,9 +74,20 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.30</version> <!-- or latest -->
+			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- Swagger / OpenAPI -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
+		<!-- ===================== -->
+		<!-- TEST -->
+		<!-- ===================== -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -79,48 +95,43 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Cucumber core for Java -->
+		<!-- Cucumber -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
-			<version>7.14.0</version>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-spring</artifactId>
-			<version>7.14.0</version>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-junit-platform-engine</artifactId>
-			<version>7.14.0</version>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-junit-platform-engine</artifactId>
-			<version>7.14.0</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.5.0</version>
-		</dependency>
 	</dependencies>
 
+	<!-- ===================== -->
+	<!-- BUILD -->
+	<!-- ===================== -->
 	<build>
 		<plugins>
+
+			<!-- Spring Boot -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<!-- JaCoCo -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -134,17 +145,15 @@
 					</execution>
 					<execution>
 						<id>report</id>
+						<phase>verify</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
-						<configuration>
-							<formats>
-								<format>XML</format>
-							</formats>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- Surefire -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -153,6 +162,14 @@
 					<useModulePath>false</useModulePath>
 				</configuration>
 			</plugin>
+
+			<!-- Sonar -->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.10.0.2594</version>
+			</plugin>
+
 		</plugins>
 	</build>
 
